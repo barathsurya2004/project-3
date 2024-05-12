@@ -1,0 +1,31 @@
+.word{
+    font-size: 33vh;
+    font-weight: 800;
+}
+.title {
+  display: flex;
+}
+.subtitle{
+  position: absolute;
+  bottom: 20vh;
+  display: flex;
+  width: 80vw;
+  flex-wrap: wrap;
+  
+}
+.move2{
+  bottom: 0px;
+
+}
+.move2 span{
+  padding: 0;
+  line-height: 30vh;
+}
+.hero{
+  position:  fixed;
+  top: 0;
+  left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding:30px 125px;
+}

@@ -1,0 +1,30 @@
+.heart {
+  background-color: #867de8;
+  display: inline-block;
+  height: 30vh;
+  width: 30vh;
+  margin: 0 10px;
+  position: relative;
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.heart:before,
+.heart:after {
+  content: "";
+  background-color: #867de8;
+  border-radius: 50%;
+  height:30vh;
+  position: absolute;
+  width: 30vh;
+}
+
+.heart:before {
+  top: -15vh;
+  left: 0;
+}
+
+.heart:after {
+  left:15vh;
+  top: 0;
+}

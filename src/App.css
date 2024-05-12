@@ -1,0 +1,26 @@
+.trigger {
+    height: 100vh;
+    width: 100vw;
+}
+.animation-canvas{
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.testing-tilt{
+    height: 100px;
+    width: 100px;
+    background-color: red;
+}
+
+
+
+.heart-container{
+   position: absolute;
+   top: 40%;
+   left: 55%;
+}
