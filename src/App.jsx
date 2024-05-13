@@ -5,32 +5,25 @@ import Heart from "./components/Heart";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { HeartModel } from "../public/models/Heart";
+import { Model } from "../public/models/Heart1";
 gsap.registerPlugin(ScrollTrigger);
 const App = () => {
-  useGSAP(() => {
-    gsap.from(".heart-container", {
-      scale: 0,
-      opacity: 0,
-      duration: 1,
-      delay: 1,
-    });
-    gsap.to(".heart-container", {
-      rotationY: 1000,
-      duration: 5,
-      scrollTrigger: {
-        trigger: ".text-change1",
-        start: "top bottom",
-        toggleActions: "play none reverse  none",
-      },
-    });
-  });
   return (
     <>
-      <div className="animation-canvas">
-        {/* <Canvas><Heart /></Canvas> */}
-        <div className="heart-container">
-          <Heart />
-        </div>
+      <div className="heart-canvas">
+        <Canvas>
+          <pointLight position={[0, 0, 3]} intensity={10} />
+          <pointLight position={[0, 3, 3]} intensity={5} />
+          <pointLight position={[0, -3, 3]} intensity={5} />
+          <pointLight position={[3, 0, 3]} intensity={5} />
+          <pointLight position={[3, 3, 3]} intensity={5} />
+          <pointLight position={[3, -3, 3]} intensity={5} />
+          <pointLight position={[-3, 0, 3]} intensity={5} />
+          <pointLight position={[-3, 3, 3]} intensity={5} />
+          <pointLight position={[-3, -3, 3]} intensity={5} />
+          <Model />
+        </Canvas>
       </div>
       <Hero />
       <div className="trigger love-out" />

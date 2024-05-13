@@ -30,16 +30,18 @@ const Hero = () => {
       stagger: 0.05,
     });
     beyond.to(".move1", {
-      y: "-100px",
+      x: "-100px",
       opacity: 0,
     });
     beyond.fromTo(
       ".move2",
       {
-        y: "100vw",
+        y: "100px",
+        opacity: 0,
       },
       {
         y: 0,
+        opacity: 1,
       }
     );
     culture.to(".move2", {

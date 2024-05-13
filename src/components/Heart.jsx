@@ -3,7 +3,7 @@ import "./Heart.css";
 const Heart = () => {
   return (
     <Tilt tiltReverse tiltMaxAngleX={5} tiltMaxAngleY={5}>
-      <div className="heart"></div>
+      <div class="heart"></div>
     </Tilt>
   );
 };
