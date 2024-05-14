@@ -7,7 +7,6 @@ const Hero = () => {
   useGSAP(() => {
     const beyond = gsap.timeline({
       scrollTrigger: {
-        markers: true,
         trigger: ".text-change1",
         start: "top bottom",
 
@@ -16,7 +15,6 @@ const Hero = () => {
     });
     const culture = gsap.timeline({
       scrollTrigger: {
-        markers: true,
         trigger: ".text-change2",
         start: "top bottom",
 

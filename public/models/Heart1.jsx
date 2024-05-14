@@ -64,7 +64,7 @@ export function Model(props) {
       {
         x: 1,
         y: 1,
-        immediateRender: false,
+        // immediateRender: false,
       },
       {
         x: 0,

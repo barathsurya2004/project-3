@@ -8,12 +8,10 @@ import { Model } from "../public/models/Heart1";
 import { Clock } from "../public/models/Clock";
 import { Loader, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import { ModelEarth } from "../public/models/ModelEarth";
 gsap.registerPlugin(ScrollTrigger);
 const App = () => {
-  const progress = useProgress();
-  useEffect(() => {
-    console.log(progress);
-  }, []);
   return (
     <>
       <div className="webgl-canvas">
@@ -44,8 +42,17 @@ const App = () => {
             <Clock />
           </Canvas>
         </div>
+        <div className="globe-canvas canvas2">
+          {/* <Canvas>
+            <axesHelper args={[5]} />
+            <mesh>
+              <directionalLight position={[0, 0, 10]} />
+              <ModelEarth scale={4} />
+            </mesh>
+          </Canvas> */}
+        </div>
       </div>
-      {/* <Loader /> */}
+      <Loader />
       <Hero />
       <div className="trigger love-out" />
       <div className="trigger love-out" />

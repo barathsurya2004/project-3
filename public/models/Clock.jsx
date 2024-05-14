@@ -18,7 +18,6 @@ export function Clock(props) {
   const minRef = useRef();
   const secRef = useRef();
   const { nodes, materials, animations } = useGLTF("/models/Clock.glb");
-  const { actions } = useAnimations(animations, clockRef);
   useFrame((state, delta) => {
     hourRef.current.rotation.y += delta / 20;
     minRef.current.rotation.y += (-delta * 12) / 20;
@@ -48,7 +47,7 @@ export function Clock(props) {
         start: "top 50%",
         end: "top 20%",
         scrub: 1,
-        immediateRender: false,
+        // immediateRender: false,
       },
       ease: CustomEase.create(
         "custom",
@@ -63,9 +62,29 @@ export function Clock(props) {
         start: "top 60%",
         end: "top 20%",
         scrub: 1,
-        immediateRender: false,
+        // immediateRender: false,
       },
     });
+    gsap.fromTo(
+      clockRef.current.scale,
+      {
+        x: 2.6,
+        y: 2.6,
+      },
+      {
+        x: 0,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: ".text-change2",
+          toggleActions: "play none none reverse",
+          start: "top bottom",
+          end: "top 50%",
+          scrub: 1,
+        },
+        immediateRender: false,
+      }
+    );
   });
   return (
     <group ref={clockRef} {...props} dispose={null} scale={2.6}>

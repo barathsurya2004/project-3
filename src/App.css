@@ -17,6 +17,13 @@
     width: 70vh;
 
 }
+.canvas2{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
 .testing-tilt{
     height: 100px;
     width: 100px;
