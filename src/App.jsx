@@ -10,6 +10,7 @@ import { Loader, useProgress } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { ModelEarth } from "../public/models/ModelEarth";
+import { Perf } from "r3f-perf";
 gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   return (
@@ -45,6 +46,7 @@ const App = () => {
         <div className="globe-canvas canvas2">
           {/* <Canvas>
             <axesHelper args={[5]} />
+            <Perf />
             <mesh>
               <directionalLight position={[0, 0, 10]} />
               <ModelEarth scale={4} />

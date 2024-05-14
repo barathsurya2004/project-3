@@ -19,9 +19,14 @@ export function Clock(props) {
   const secRef = useRef();
   const { nodes, materials, animations } = useGLTF("/models/Clock.glb");
   useFrame((state, delta) => {
-    hourRef.current.rotation.y += delta / 20;
-    minRef.current.rotation.y += (-delta * 12) / 20;
-    secRef.current.rotation.y += (delta * 12 * 12) / 20;
+    const d = new Date();
+    // console.log(d.getHours());
+    hourRef.current.rotation.y =
+      -Math.PI * 0.5 + (2 * Math.PI * d.getHours()) / 12;
+    minRef.current.rotation.y =
+      -Math.PI * 0.5 - (2 * Math.PI * d.getMinutes()) / 60;
+    secRef.current.rotation.y =
+      -Math.PI * 0.1 + (2 * Math.PI * d.getSeconds()) / 60;
   });
   useGSAP(() => {
     gsap.from(clockRef.current.scale, {
@@ -54,17 +59,7 @@ export function Clock(props) {
         "M0,0 C0,0 0.1,0.202 0.196,0.323 0.274,0.418 0.407,0.396 0.7,0.5 0.861,0.575 1,1 1,1 "
       ),
     });
-    gsap.from(clockRef.current, {
-      visble: false,
-      scrollTrigger: {
-        trigger: ".text-change1",
-        toggleActions: "play none none reverse",
-        start: "top 60%",
-        end: "top 20%",
-        scrub: 1,
-        // immediateRender: false,
-      },
-    });
+
     gsap.fromTo(
       clockRef.current.scale,
       {
@@ -85,6 +80,21 @@ export function Clock(props) {
         immediateRender: false,
       }
     );
+    gsap.to(clockRef.current.rotation, {
+      y: -10 * Math.PI,
+      scrollTrigger: {
+        trigger: ".text-change2",
+        toggleActions: "play none none reverse",
+        start: "top bottom",
+        end: "top top",
+        scrub: 1,
+        // immediateRender: false,
+      },
+      ease: CustomEase.create(
+        "custom",
+        "M0,0 C0,0 0.1,0.202 0.196,0.323 0.274,0.418 0.407,0.396 0.7,0.5 0.861,0.575 1,1 1,1 "
+      ),
+    });
   });
   return (
     <group ref={clockRef} {...props} dispose={null} scale={2.6}>
