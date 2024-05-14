@@ -12,55 +12,78 @@ import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger);
 export function Model(props) {
-  const group = useRef();
+  const heartref = useRef();
   const { nodes, materials, animations } = useGLTF("/models/heart2.glb");
-  const { actions } = useAnimations(animations, group);
+  const { actions } = useAnimations(animations, heartref);
   const [hover, setHover] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
   useFrame((state, delta) => {
     if (!hover) {
-      // console.log(group.current.rotation);
-      if (group.current.rotation.x > 0) {
-        group.current.rotation.x -= delta / 5;
+      // console.log(heartref.current.rotation);
+      if (heartref.current.rotation.x > 0) {
+        heartref.current.rotation.x -= delta / 10;
       }
-      if (group.current.rotation.x < 0) {
-        group.current.rotation.x += delta / 5;
+      if (heartref.current.rotation.x < 0) {
+        heartref.current.rotation.x += delta / 10;
       }
-      if (group.current.rotation.y > 0) {
-        group.current.rotation.y -= delta / 5;
+      if (heartref.current.rotation.y > 0) {
+        heartref.current.rotation.y -= delta / 10;
       }
-      if (group.current.rotation.y < 0) {
-        group.current.rotation.y += delta / 5;
+      if (heartref.current.rotation.y < 0) {
+        heartref.current.rotation.y += delta / 10;
       }
     } else {
-      if (group.current.rotation.y < mouseX / 10) {
-        group.current.rotation.y += delta / 5;
+      if (heartref.current.rotation.y < mouseX / 10) {
+        heartref.current.rotation.y += delta / 5;
       }
-      if (group.current.rotation.y > mouseX / 10) {
-        group.current.rotation.y -= delta / 5;
+      if (heartref.current.rotation.y > mouseX / 10) {
+        heartref.current.rotation.y -= delta / 5;
       }
-      if (group.current.rotation.x > -mouseY / 10) {
-        group.current.rotation.x -= delta / 5;
+      if (heartref.current.rotation.x > -mouseY / 10) {
+        heartref.current.rotation.x -= delta / 5;
       }
-      if (group.current.rotation.x < -mouseY / 10) {
-        group.current.rotation.x += delta / 5;
+      if (heartref.current.rotation.x < -mouseY / 10) {
+        heartref.current.rotation.x += delta / 5;
       }
     }
   });
   useGSAP(() => {
-    console.log(group.current.rotation);
-    gsap.from(group.current.scale, {
+    console.log(heartref.current.rotation);
+    gsap.from(heartref.current.scale, {
       x: 0,
       y: 0,
       duration: 1,
       delay: 1,
     });
+    gsap.fromTo(
+      heartref.current.scale,
+      {
+        x: 1,
+        y: 1,
+        immediateRender: false,
+      },
+      {
+        x: 0,
+        y: 0,
+        duration: 1,
+        scrollTrigger: {
+          trigger: ".text-change1",
+          toggleActions: "play none none reverse",
+          start: "top bottom",
+          end: "top 50%",
+          scrub: 1,
+        },
+        immediateRender: false,
+      }
+    );
   });
   return (
     <group
-      ref={group}
+      ref={heartref}
       {...props}
       dispose={null}
       onPointerMove={(e) => {

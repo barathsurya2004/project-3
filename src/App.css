@@ -3,13 +3,19 @@
     width: 100vw;
 }
 .heart-canvas{
+    z-index: 2;
+}
+.clock-canvas{
+    z-index: 1;
+}
+.canvas1{
     
     position: fixed;
     top: 25%;
     right:15% ;
     height: 70vh;
     width: 70vh;
-    z-index: 1;
+
 }
 .testing-tilt{
     height: 100px;

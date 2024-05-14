@@ -7,11 +7,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { HeartModel } from "../public/models/Heart";
 import { Model } from "../public/models/Heart1";
+import { Clock } from "../public/models/Clock";
+import { OrbitControls } from "@react-three/drei";
 gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   return (
     <>
-      <div className="heart-canvas">
+      <div className="heart-canvas canvas1">
         <Canvas>
           <pointLight position={[0, 0, 3]} intensity={10} />
           <pointLight position={[0, 3, 3]} intensity={5} />
@@ -23,6 +25,19 @@ const App = () => {
           <pointLight position={[-3, 3, 3]} intensity={5} />
           <pointLight position={[-3, -3, 3]} intensity={5} />
           <Model />
+        </Canvas>
+      </div>
+      <div className="clock-canvas canvas1">
+        <Canvas>
+          <ambientLight />
+          <directionalLight
+            rotation-y={Math.PI}
+            angle={Math.PI / 4}
+            intensity={5}
+            position={[0, 0, -3]}
+          />
+
+          <Clock />
         </Canvas>
       </div>
       <Hero />
