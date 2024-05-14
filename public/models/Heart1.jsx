@@ -21,8 +21,9 @@ export function HeartModel(props) {
   const [hover, setHover] = useState(false);
   const [mouseX, setMouseX] = useState(0);
   const [mouseY, setMouseY] = useState(0);
+  const [rev, setRev] = useState(false);
   useFrame((state, delta) => {
-    if (!hover) {
+    if (!hover && !rev) {
       // console.log(heartref.current.rotation);
       if (heartref.current.rotation.x > 0) {
         heartref.current.rotation.x -= delta / 10;
@@ -59,27 +60,34 @@ export function HeartModel(props) {
       duration: 1,
       delay: 1,
     });
-    gsap.fromTo(
-      heartref.current.scale,
+    gsap.to(
+      heartref.current.rotation,
+
       {
-        x: 1,
-        y: 1,
-        // immediateRender: false,
-      },
-      {
-        x: 0,
-        y: 0,
-        duration: 1,
+        y: 30 * Math.PI,
         scrollTrigger: {
           trigger: ".text-change1",
+          onEnter: () => setRev(true),
+          onEnterBack: () => setRev(false),
           toggleActions: "play none none reverse",
           start: "top bottom",
-          end: "top 50%",
+          end: "top top",
           scrub: 1,
         },
-        immediateRender: false,
       }
     );
+    gsap.to(heartref.current.scale, {
+      x: 0,
+      y: 0,
+      scrollTrigger: {
+        markers: true,
+        trigger: ".text-change1",
+        start: "top 50%",
+        end: "top top",
+        toggleActions: "play none none reverse",
+        scrub: 1,
+      },
+    });
   });
   return (
     <group

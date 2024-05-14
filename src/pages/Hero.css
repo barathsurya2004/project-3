@@ -7,14 +7,14 @@
 }
 .subtitle{
   position: absolute;
-  bottom: 20vh;
+  bottom: 25vh;
   display: flex;
   width: 80vw;
   flex-wrap: wrap;
   
 }
 .move2{
-  bottom: 0px;
+  bottom: 5vh;
 
 }
 .move2 span{
@@ -27,5 +27,5 @@
   left: 0;
     width: 100vw;
     height: 100vh;
-    padding:30px 125px;
+    padding:0px 125px;
 }
