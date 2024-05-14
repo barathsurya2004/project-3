@@ -4,15 +4,16 @@ import { Canvas } from "@react-three/fiber";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { Model } from "../public/models/Heart1";
+import { HeartModel } from "../public/models/Heart1";
 import { Clock } from "../public/models/Clock";
-import { Loader, useProgress } from "@react-three/drei";
-import { Suspense, useEffect, useState } from "react";
+import { Loader, OrbitControls, useProgress } from "@react-three/drei";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { ModelEarth } from "../public/models/ModelEarth";
 import { Perf } from "r3f-perf";
 gsap.registerPlugin(ScrollTrigger);
 const App = () => {
+  const dirLight = useRef();
   return (
     <>
       <div className="webgl-canvas">
@@ -27,17 +28,24 @@ const App = () => {
             <pointLight position={[-3, 0, 3]} intensity={5} />
             <pointLight position={[-3, 3, 3]} intensity={5} />
             <pointLight position={[-3, -3, 3]} intensity={5} />
-            <Model />
+            <HeartModel />
           </Canvas>
         </div>
         <div className="clock-canvas canvas1">
           <Canvas>
-            <ambientLight />
+            {/* <OrbitControls /> */}
+            {/* <ambientLight /> */}
             <directionalLight
-              rotation-y={Math.PI}
-              angle={Math.PI / 4}
+              ref={dirLight}
               intensity={5}
-              position={[0, 0, -3]}
+              castShadow
+              position={[0, 3, -10]}
+            />
+            <directionalLight
+              ref={dirLight}
+              intensity={5}
+              castShadow
+              position={[0, 3, 10]}
             />
 
             <Clock />

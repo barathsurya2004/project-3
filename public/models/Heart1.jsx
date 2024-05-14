@@ -14,7 +14,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger);
-export function Model(props) {
+export function HeartModel(props) {
   const heartref = useRef();
   const { nodes, materials, animations } = useGLTF("/models/heart2.glb");
   const { actions } = useAnimations(animations, heartref);
