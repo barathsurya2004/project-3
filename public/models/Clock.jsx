@@ -7,9 +7,11 @@ import React, { useRef } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
-gsap.registerPlugin(ScrollTrigger);
+import { CustomEase, ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
+gsap.registerPlugin(CustomEase);
+
+gsap.registerPlugin(ScrollTrigger);
 export function Clock(props) {
   const clockRef = useRef();
   const hourRef = useRef();
@@ -39,7 +41,7 @@ export function Clock(props) {
     console.log(clockRef.current.rotation);
     gsap.from(clockRef.current.rotation, {
       delay: 2,
-      y: 4 * Math.PI,
+      y: 10 * Math.PI,
       scrollTrigger: {
         trigger: ".text-change1",
         toggleActions: "play none none reverse",
@@ -48,6 +50,10 @@ export function Clock(props) {
         scrub: 1,
         immediateRender: false,
       },
+      ease: CustomEase.create(
+        "custom",
+        "M0,0 C0,0 0.1,0.202 0.196,0.323 0.274,0.418 0.407,0.396 0.7,0.5 0.861,0.575 1,1 1,1 "
+      ),
     });
     gsap.from(clockRef.current, {
       visble: false,
