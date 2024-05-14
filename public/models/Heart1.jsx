@@ -14,7 +14,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 export function Model(props) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF("/models/heart1.glb");
+  const { nodes, materials, animations } = useGLTF("/models/heart2.glb");
   const { actions } = useAnimations(animations, group);
   const [hover, setHover] = useState(false);
   const [mouseX, setMouseX] = useState(0);
@@ -70,6 +70,7 @@ export function Model(props) {
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
     >
+      {/* <axesHelper /> */}
       <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group
@@ -81,7 +82,7 @@ export function Model(props) {
               <group name="RootNode">
                 <group
                   name="BASE_HEART"
-                  position={[0, -30, 0]}
+                  position={[0, 0, 0]}
                   rotation={[-Math.PI / 2, 0, 0]}
                 >
                   <group name="Object_5">
@@ -90,6 +91,13 @@ export function Model(props) {
                       geometry={nodes["BASE_HEART_Material_#41_0"].geometry}
                     >
                       <meshStandardMaterial color={"#867de8"} />
+                    </mesh>
+                    <mesh
+                      name="BASE_HEART_Material_#41_0001"
+                      geometry={nodes["BASE_HEART_Material_#41_0001"].geometry}
+                      scale={1.12}
+                    >
+                      <meshStandardMaterial transparent opacity={0} />
                     </mesh>
                   </group>
                 </group>
