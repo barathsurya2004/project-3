@@ -48,8 +48,8 @@ export function Clock(props) {
     gsap.fromTo(
       clockRef.current.scale,
       {
-        x: 0.5,
-        y: 0.5,
+        x: 0,
+        y: 0,
       },
       {
         x: 2.6,

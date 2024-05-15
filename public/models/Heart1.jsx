@@ -111,7 +111,7 @@ export function HeartModel(props) {
       <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group
-            scale={0.07}
+            scale={0.065}
             name="f6bcb81c5d674405b84df409a29b9a55fbx"
             rotation={[Math.PI / 2, 0, 0]}
           >
