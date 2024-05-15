@@ -78,7 +78,7 @@ export function HeartModel(props) {
           toggleActions: "play none none reverse",
           start: "top bottom",
           end: "top 50%",
-          scrub: 1,
+          scrub: 1.2,
         },
         ease: "expo.in",
       }
@@ -114,6 +114,7 @@ export function HeartModel(props) {
       position={[0, -0.35, 0]}
     >
       {/* <axesHelper args={[5]} /> */}
+      <ambientLight intensity={0.5} />
       <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group
@@ -138,7 +139,7 @@ export function HeartModel(props) {
                     <mesh
                       name="BASE_HEART_Material_#41_0001"
                       geometry={nodes["BASE_HEART_Material_#41_0001"].geometry}
-                      scale={1.12}
+                      scale={1.15}
                     >
                       <meshStandardMaterial transparent opacity={0} />
                     </mesh>

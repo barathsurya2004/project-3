@@ -41,7 +41,7 @@ export function Clock(props) {
         toggleActions: "play none none reverse",
         start: "top 50%",
         end: "top top",
-        scrub: 1,
+        scrub: 1.2,
       },
       ease: "expo.out",
     });
@@ -87,7 +87,7 @@ export function Clock(props) {
           rotation={[Math.PI / 2, 0, 0]}
           scale={[-1, -0.101, -1]}
         >
-          {/* <ambientLight /> */}
+          <ambientLight intensity={0.1} />
           {/* <axesHelper args={[5]} /> */}
           <directionalLight position={[0, 5, 0]} intensity={2} />
           <directionalLight intensity={2} position={[0, -5, 0]} />
@@ -151,7 +151,7 @@ export function Clock(props) {
             position={[0, -1.515, 0]}
             rotation={[Math.PI, 0, 0]}
           >
-            <meshStandardMaterial transparent opacity={0.1} />
+            <meshStandardMaterial transparent />
           </mesh>
           <mesh
             name="t"
