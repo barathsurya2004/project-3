@@ -33,21 +33,6 @@ const App = () => {
         </div>
         <div className="clock-canvas canvas1">
           <Canvas>
-            {/* <OrbitControls /> */}
-            {/* <ambientLight /> */}
-            <directionalLight
-              ref={dirLight}
-              intensity={5}
-              castShadow
-              position={[0, 3, -10]}
-            />
-            <directionalLight
-              ref={dirLight}
-              intensity={5}
-              castShadow
-              position={[0, 3, 10]}
-            />
-
             <Clock />
           </Canvas>
         </div>

@@ -70,24 +70,30 @@ export function HeartModel(props) {
           onEnter: () => setRev(true),
           onEnterBack: () => setRev(false),
           toggleActions: "play none none reverse",
+          ease: "expo.in",
           start: "top bottom",
           end: "top top",
           scrub: 1,
         },
       }
     );
-    gsap.to(heartref.current.scale, {
-      x: 0,
-      y: 0,
-      scrollTrigger: {
-        markers: true,
-        trigger: ".text-change1",
-        start: "top 50%",
-        end: "top top",
-        toggleActions: "play none none reverse",
-        scrub: 1,
-      },
-    });
+    console.log(heartref.current);
+    gsap.fromTo(
+      heartref.current.scale,
+      { x: 1, y: 1 },
+      {
+        x: 0,
+        y: 0,
+        duration: 0.01,
+        scrollTrigger: {
+          markers: true,
+          trigger: ".text-change1",
+          start: "top 50%",
+          toggleActions: "play reverse none reverse",
+        },
+        immediateRender: false,
+      }
+    );
   });
   return (
     <group

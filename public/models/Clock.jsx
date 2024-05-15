@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.2.16 Clock.glb
 */
 
 import React, { useRef } from "react";
-import { useGLTF, useAnimations } from "@react-three/drei";
+import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { useGSAP } from "@gsap/react";
 import { CustomEase, ScrollTrigger } from "gsap/all";
@@ -18,7 +18,7 @@ export function Clock(props) {
   const hourRef = useRef();
   const minRef = useRef();
   const secRef = useRef();
-  const { nodes, materials, animations } = useGLTF("/models/Clock1.glb");
+  const { nodes, materials, animations } = useGLTF("/models/Clock.glb");
   useFrame((state, delta) => {
     const d = new Date();
     // console.log(d.getHours());
@@ -54,12 +54,12 @@ export function Clock(props) {
       {
         x: 2.6,
         y: 2.6,
+        duration: 0.01,
         scrollTrigger: {
           trigger: ".text-change1",
-          start: "top bottom",
-          end: "top 50%",
+          start: "top 50%",
+
           toggleActions: "play none none reverse",
-          scrub: 1,
           immediateRender: false,
         },
       }
@@ -74,24 +74,32 @@ export function Clock(props) {
         scrub: 1,
         // immediateRender: false,
       },
-      ease: CustomEase.create(
-        "custom",
-        "M0,0 C0,0 0.1,0.202 0.196,0.323 0.274,0.418 0.407,0.396 0.7,0.5 0.861,0.575 1,1 1,1 "
-      ),
+      ease: "expo.in",
     });
   });
   const wood = useLoader(TextureLoader, "/models/wood.jpg");
   return (
     <group ref={clockRef} {...props} dispose={null} scale={2.6}>
       <group name="Scene">
+        <OrbitControls />
         <group
           name="Clock"
           rotation={[Math.PI / 2, 0, 0]}
           scale={[-1, -0.101, -1]}
         >
-          <mesh name="clock001" geometry={nodes.clock001.geometry}>
+          {/* <ambientLight /> */}
+          {/* <axesHelper args={[5]} /> */}
+          <directionalLight position={[0, 5, 0]} intensity={2} />
+          <directionalLight intensity={2} position={[0, -5, 0]} />
+          <mesh
+            name="clock001"
+            geometry={nodes.clock001.geometry}
+            castShadow
+            receiveShadow
+          >
             <meshStandardMaterial map={wood} />
           </mesh>
+
           <mesh
             name="clock001_1"
             geometry={nodes.clock001_1.geometry}
