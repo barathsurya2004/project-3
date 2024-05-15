@@ -40,6 +40,7 @@ export function Clock(props) {
         trigger: ".text-change1",
         toggleActions: "play none none reverse",
         start: "top bottom",
+        ease: "expo.out",
         end: "top top",
         scrub: 1,
         // immediateRender: false,

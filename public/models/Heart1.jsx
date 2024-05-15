@@ -89,7 +89,7 @@ export function HeartModel(props) {
           markers: true,
           trigger: ".text-change1",
           start: "top 50%",
-          toggleActions: "play reverse none reverse",
+          toggleActions: "play none none reverse",
         },
         immediateRender: false,
       }
