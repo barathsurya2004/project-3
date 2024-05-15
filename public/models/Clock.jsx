@@ -101,17 +101,14 @@ export function Clock(props) {
         },
       }
     );
-    gsap.to(clockRef.current.rotation, {
-      y: -10 * Math.PI,
+    gsap.to(clockRef.current.scale, {
+      y: 0,
+      x: 0,
+      duration: 0.001,
       scrollTrigger: {
         trigger: ".text-change2",
-        toggleActions: "play none none reverse",
         start: "top bottom",
-        end: "top 80%",
-        scrub: 1,
-        // immediateRender: false,
       },
-      ease: "expo.in",
     });
   });
   const wood = useLoader(TextureLoader, "/models/wood.jpg");

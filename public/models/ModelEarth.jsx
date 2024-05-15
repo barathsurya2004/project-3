@@ -4,23 +4,45 @@ Command: npx gltfjsx@6.2.16 modelEarth.glb
 */
 
 import React, { useRef } from "react";
-import { useGLTF } from "@react-three/drei";
-
+import { OrbitControls, PerspectiveCamera, useGLTF } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { ScrollTrigger } from "gsap/all";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+gsap.registerPlugin(ScrollTrigger);
 export function ModelEarth(props) {
-  const { nodes, materials } = useGLTF("/models/modelEarth.glb");
+  const { nodes, materials } = useGLTF("/models/newEarth.glb");
+  const earthRef = useRef();
+  useGSAP(() => {
+    const firstZoom = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".world-zoom",
+        start: "top bottom",
+        scrub: 0.8,
+      },
+    });
+  });
+
+  useFrame((state, delta) => {
+    earthRef.current.rotation.y += delta;
+  });
   return (
-    <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.map_new.geometry}
-        material={materials["Material.006"]}
-        rotation={[0, 0, -Math.PI / 2]}
-        scale={2}
-      />
-      <mesh
-        geometry={nodes.Icosphere.geometry}
-        material={materials["Matte Metallic Paint"]}
-        scale={0.506}
-      />
+    <group scale={1} position={[1.8, 0, 0]} ref={earthRef}>
+      <group {...props} dispose={null} rotation-z={Math.PI * 0.5}>
+        {/* <OrbitControls /> */}
+
+        <mesh
+          geometry={nodes.map_new.geometry}
+          material={materials["Material"]}
+          rotation={[0, 0, -Math.PI / 2]}
+          scale={2}
+        />
+        <mesh
+          geometry={nodes.Icosphere.geometry}
+          material={materials["Matte Metallic Paint"]}
+          scale={0.506}
+        />
+      </group>
     </group>
   );
 }
