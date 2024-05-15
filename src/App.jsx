@@ -17,7 +17,7 @@ const App = () => {
   return (
     <>
       <div className="webgl-canvas">
-        {/* <div className="heart-canvas canvas1">
+        <div className="heart-canvas canvas1">
           <Canvas>
             <pointLight position={[0, 0, 3]} intensity={10} />
             <pointLight position={[0, 3, 3]} intensity={5} />
@@ -30,7 +30,7 @@ const App = () => {
             <pointLight position={[-3, -3, 3]} intensity={5} />
             <HeartModel />
           </Canvas>
-        </div> */}
+        </div>
         <div className="clock-canvas canvas1">
           <Canvas>
             <Clock />
