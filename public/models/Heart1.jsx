@@ -37,7 +37,7 @@ export function HeartModel(props) {
       if (heartref.current.rotation.y < 0) {
         heartref.current.rotation.y += delta / 10;
       }
-    } else {
+    } else if (hover && !rev) {
       if (heartref.current.rotation.y < mouseX / 10) {
         heartref.current.rotation.y += delta / 5;
       }
@@ -60,31 +60,36 @@ export function HeartModel(props) {
       duration: 1,
       delay: 1,
     });
-    gsap.to(
+    gsap.fromTo(
       heartref.current.rotation,
-
+      { y: 0 },
       {
-        y: 30 * Math.PI,
+        y: 10 * Math.PI + Math.PI * 0.5,
         scrollTrigger: {
           trigger: ".text-change1",
-          onEnter: () => setRev(true),
-          onEnterBack: () => setRev(false),
+          onEnter: () => {
+            setRev(true);
+            console.log(rev);
+          },
+          onLeaveBack: () => {
+            setRev(false);
+            console.log(rev);
+          },
           toggleActions: "play none none reverse",
-          ease: "expo.in",
           start: "top bottom",
-          end: "top top",
+          end: "top 50%",
           scrub: 1,
         },
+        ease: "expo.in",
       }
     );
-    console.log(heartref.current);
     gsap.fromTo(
       heartref.current.scale,
       { x: 1, y: 1 },
       {
         x: 0,
         y: 0,
-        duration: 0.01,
+        duration: 0.001,
         scrollTrigger: {
           markers: true,
           trigger: ".text-change1",
@@ -106,8 +111,9 @@ export function HeartModel(props) {
       }}
       onPointerEnter={() => setHover(true)}
       onPointerLeave={() => setHover(false)}
+      position={[0, -0.35, 0]}
     >
-      {/* <axesHelper /> */}
+      {/* <axesHelper args={[5]} /> */}
       <group name="Sketchfab_Scene">
         <group name="Sketchfab_model" rotation={[-Math.PI / 2, 0, 0]}>
           <group

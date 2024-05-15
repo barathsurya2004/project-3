@@ -35,16 +35,15 @@ export function Clock(props) {
     console.log(clockRef.current.rotation);
     gsap.from(clockRef.current.rotation, {
       delay: 2,
-      y: -30 * Math.PI,
+      y: -10 * Math.PI - Math.PI * 0.5,
       scrollTrigger: {
         trigger: ".text-change1",
         toggleActions: "play none none reverse",
-        start: "top bottom",
-        ease: "expo.out",
+        start: "top 50%",
         end: "top top",
         scrub: 1,
-        // immediateRender: false,
       },
+      ease: "expo.out",
     });
     gsap.fromTo(
       clockRef.current.scale,
@@ -55,7 +54,7 @@ export function Clock(props) {
       {
         x: 2.6,
         y: 2.6,
-        duration: 0.01,
+        duration: 0.001,
         scrollTrigger: {
           trigger: ".text-change1",
           start: "top 50%",
