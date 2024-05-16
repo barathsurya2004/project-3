@@ -68,10 +68,11 @@ const App = () => {
       <div className="trigger culture-out" />
       <div className="trigger culture-out" />
 
+      <div className="trigger world-move-zoom" />
+      <div className="trigger all-out" />
       <div className="trigger world-zoom" />
       <div className="trigger all-out" />
-      <div className="trigger all-out" />
-      <div className="trigger world" />
+      <div className="trigger nav-to-tn" />
       <div className="trigger" />
     </>
   );
