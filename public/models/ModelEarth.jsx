@@ -1,24 +1,65 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useFrame } from "@react-three/fiber";
-import { ScrollTrigger } from "gsap/all";
+import { CustomEase, ScrollTrigger } from "gsap/all";
 import { CameraHelper } from "three";
 gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(CustomEase);
 export function Earth(props) {
   const earth = useRef();
+  const earthMouseX = useRef();
+  const earthMouseY = useRef();
   const [rotate, setRotate] = useState(true);
+  const [x, setX] = useState();
+  const [y, setY] = useState();
+  const [absX, setAbsX] = useState();
+  const [absY, setAbsY] = useState();
 
+  useEffect(() => {
+    const update = (e) => {
+      const wid = window.innerWidth;
+      const hig = window.innerHeight;
+      // console.log(wid);
+      setAbsX(e.x / wid);
+      setAbsY(e.y / hig);
+      setX(e.x - wid / 2);
+      setY(hig / 2 - e.y);
+    };
+    window.addEventListener("mousemove", update);
+    window.addEventListener("touchmove", update);
+    return () => {
+      window.removeEventListener("mousemove", update);
+      window.removeEventListener("touchmove", update);
+    };
+  }, [setX, setY]);
   useFrame((state, delta) => {
     if (rotate) {
       earth.current.rotation.y =
         ((earth.current.rotation.y + delta) % (2 * Math.PI)) + 10 * Math.PI;
+
+      // earthMouseX.current.rotation.y = x;
+      // earthMouseX.current.rotation.x = x / 1000;
+      gsap.to(earthMouseX.current.rotation, {
+        x: x * 0.001,
+        duration: 0.5,
+      });
+      gsap.to(earthMouseY.current.rotation, {
+        x: -y * 0.001,
+        duration: 0.5,
+      });
+
+      // earthMouseY.current.rotation.x = -y / 1000;
+    } else {
+      earthMouseX.current.rotation.x = 0;
+      earthMouseY.current.rotation.x = 0;
     }
   });
   useGSAP(() => {
     earth.current.rotation.y = Math.PI * 10;
     console.log(earth.current);
+
     gsap.to(
       earth.current.scale,
 
@@ -56,23 +97,22 @@ export function Earth(props) {
         onLeaveBack: ({ progress, direction, isActive }) => setRotate(true),
       },
     });
-    gsap.fromTo(
+    gsap.to(
       earth.current.rotation,
-      {
-        y: earth.current.rotation.y,
-      },
+
       {
         y: (-Math.PI * 66.8) / 180,
         scrollTrigger: {
           trigger: ".nav-to-india",
           start: "top bottom",
           end: "top 50%",
-          scrub: 1,
+          scrub: 0.8,
           toggleActions: "play none none reverse",
-          onEnter: () => console.log(earth.current.rotation.y),
         },
-        immediateRender: false,
-        ease: "expo.out",
+        ease: CustomEase.create(
+          "custom",
+          "M0,0 C0.084,0.61 0.127,0.828 0.218,0.905 0.294,0.991 0.374,1 1,1 "
+        ),
       }
     );
     gsap.fromTo(
@@ -92,23 +132,7 @@ export function Earth(props) {
         immediateRender: false,
       }
     );
-    // gsap.to(
-    //   earth.current.rotation,
 
-    //   {
-    //     y:
-    //       (-Math.PI * 66.8) / 180 +
-    //       Math.floor(earth.current.rotation.y / (2 * Math.PI)) * (2 * Math.PI),
-    //     scrollTrigger: {
-    //       trigger: ".world-move-zoom",
-    //       onEnter: () => console.log(earth.current.rotation.y),
-    //       start: "top 75%",
-    //       end: "top top",
-    //       scrub: 1,
-    //     },
-    //     immediateRender: false,
-    //   }
-    // );
     gsap.fromTo(
       earth.current.position,
       {
@@ -161,20 +185,24 @@ export function Earth(props) {
   });
   const { nodes, materials } = useGLTF("/models/newEarth.glb");
   return (
-    <group>
+    <group ref={earthMouseY}>
+      {/* <axesHelper args={[10]} /> */}
       <group {...props} ref={earth} position={[0.95, 0, 0]}>
-        <mesh
-          geometry={nodes.map_new.geometry}
-          material={materials["Material"]}
-          rotation={[0, 0, -Math.PI / 2]}
-          scale={2}
-        />
-        <mesh
-          geometry={nodes.Icosphere.geometry}
-          material={materials["Matte Metallic Paint"]}
-          scale={0.506}
-        />
-        {/* <CameraHelper /> */}
+        {/* <axesHelper args={[10]} /> */}
+        <group ref={earthMouseX}>
+          <mesh
+            geometry={nodes.map_new.geometry}
+            material={materials["Material"]}
+            rotation={[0, 0, -Math.PI / 2]}
+            scale={2}
+          />
+          <mesh
+            geometry={nodes.Icosphere.geometry}
+            material={materials["Matte Metallic Paint"]}
+            scale={0.506}
+          />
+          {/* <CameraHelper /> */}
+        </group>
       </group>
     </group>
   );
