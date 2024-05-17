@@ -2,15 +2,7 @@
     height: 100vh;
     width: 100vw;
 }
-.heart-canvas{
-    z-index: 2;
-}
-.clock-canvas{
-    z-index: 1;
-}
-.globe-canvas{
-    z-index: 3;
-}
+
 .canvas1{
     
     position: fixed;
