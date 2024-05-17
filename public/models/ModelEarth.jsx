@@ -12,10 +12,13 @@ export function Earth(props) {
 
   useFrame((state, delta) => {
     if (rotate) {
-      earth.current.rotation.y += delta;
+      earth.current.rotation.y =
+        ((earth.current.rotation.y + delta) % (2 * Math.PI)) + 10 * Math.PI;
     }
   });
   useGSAP(() => {
+    earth.current.rotation.y = Math.PI * 10;
+    console.log(earth.current);
     gsap.to(
       earth.current.scale,
 
@@ -37,18 +40,48 @@ export function Earth(props) {
         trigger: ".world-move-zoom",
         start: "top 80%",
         end: "top top",
+      },
+    });
+    gsap.to(earth.current.position, {
+      x: 0,
+      z: 3,
+      scrollTrigger: {
+        trigger: ".nav-to-india",
+        markers: true,
+        start: "top bottom",
+        end: "top 50%",
+        scrub: 1,
         onEnter: ({ progress, direction, isActive }) => setRotate(false),
 
         onLeaveBack: ({ progress, direction, isActive }) => setRotate(true),
       },
     });
-    gsap.to(
+    gsap.fromTo(
+      earth.current.rotation,
+      {
+        y: earth.current.rotation.y,
+      },
+      {
+        y: (-Math.PI * 66.8) / 180,
+        scrollTrigger: {
+          trigger: ".nav-to-india",
+          start: "top bottom",
+          end: "top 50%",
+          scrub: 1,
+          toggleActions: "play none none reverse",
+          onEnter: () => console.log(earth.current.rotation.y),
+        },
+        immediateRender: false,
+        ease: "expo.out",
+      }
+    );
+    gsap.fromTo(
       earth.current.position,
-
+      { z: 3 },
       {
         z: 3.75,
         y: 0.19,
-        x: 0,
+
         scrollTrigger: {
           trigger: ".world-move-zoom",
           start: "top bottom",
@@ -56,17 +89,26 @@ export function Earth(props) {
           scrub: 1,
         },
         ease: "expo.out",
+        immediateRender: false,
       }
     );
-    gsap.to(earth.current.rotation, {
-      y: (-Math.PI * 66.8) / 180 + Math.PI * 2,
-      scrollTrigger: {
-        trigger: ".world-move-zoom",
-        start: "top 75%",
-        end: "top top",
-        scrub: 1,
-      },
-    });
+    // gsap.to(
+    //   earth.current.rotation,
+
+    //   {
+    //     y:
+    //       (-Math.PI * 66.8) / 180 +
+    //       Math.floor(earth.current.rotation.y / (2 * Math.PI)) * (2 * Math.PI),
+    //     scrollTrigger: {
+    //       trigger: ".world-move-zoom",
+    //       onEnter: () => console.log(earth.current.rotation.y),
+    //       start: "top 75%",
+    //       end: "top top",
+    //       scrub: 1,
+    //     },
+    //     immediateRender: false,
+    //   }
+    // );
     gsap.fromTo(
       earth.current.position,
       {
@@ -119,19 +161,21 @@ export function Earth(props) {
   });
   const { nodes, materials } = useGLTF("/models/newEarth.glb");
   return (
-    <group ref={earth} {...props} dispose={null} position={[0.95, 0, 0]}>
-      <mesh
-        geometry={nodes.map_new.geometry}
-        material={materials["Material"]}
-        rotation={[0, 0, -Math.PI / 2]}
-        scale={2}
-      />
-      <mesh
-        geometry={nodes.Icosphere.geometry}
-        material={materials["Matte Metallic Paint"]}
-        scale={0.506}
-      />
-      {/* <CameraHelper /> */}
+    <group>
+      <group {...props} ref={earth} position={[0.95, 0, 0]}>
+        <mesh
+          geometry={nodes.map_new.geometry}
+          material={materials["Material"]}
+          rotation={[0, 0, -Math.PI / 2]}
+          scale={2}
+        />
+        <mesh
+          geometry={nodes.Icosphere.geometry}
+          material={materials["Matte Metallic Paint"]}
+          scale={0.506}
+        />
+        {/* <CameraHelper /> */}
+      </group>
     </group>
   );
 }

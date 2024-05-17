@@ -111,7 +111,7 @@ const App = () => {
       <div className="trigger text-change2" />
       <div className="trigger culture-out" />
       <div className="trigger culture-out" />
-
+      <div className="trigger nav-to-india"></div>
       <div className="trigger world-move-zoom" />
       <div className="trigger world-zoom1" />
       <div className="trigger nav-to-tn" />
