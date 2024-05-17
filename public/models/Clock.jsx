@@ -39,31 +39,41 @@ export function Clock(props) {
     // console.log(mouseY);
     if (!hover && !rev) {
       // console.log(clockRef.current.rotation);
-      if (clockRef.current.rotation.x > 0) {
-        clockRef.current.rotation.x -= delta / 10;
-      }
-      if (clockRef.current.rotation.x < 0) {
-        clockRef.current.rotation.x += delta / 10;
-      }
-      if (clockRef.current.rotation.y > 0) {
-        clockRef.current.rotation.y -= delta / 10;
-      }
-      if (clockRef.current.rotation.y < 0) {
-        clockRef.current.rotation.y += delta / 10;
-      }
+      gsap.to(clockRef.current.rotation, {
+        x: 0,
+        y: 0,
+        duration: 1,
+      });
+      // if (clockRef.current.rotation.x > 0) {
+      //   clockRef.current.rotation.x -= delta / 10;
+      // }
+      // if (clockRef.current.rotation.x < 0) {
+      //   clockRef.current.rotation.x += delta / 10;
+      // }
+      // if (clockRef.current.rotation.y > 0) {
+      //   clockRef.current.rotation.y -= delta / 10;
+      // }
+      // if (clockRef.current.rotation.y < 0) {
+      //   clockRef.current.rotation.y += delta / 10;
+      // }
     } else if (hover && !rev) {
-      if (clockRef.current.rotation.y < mouseX / 10) {
-        clockRef.current.rotation.y += delta;
-      }
-      if (clockRef.current.rotation.y > mouseX / 10) {
-        clockRef.current.rotation.y -= delta;
-      }
-      if (clockRef.current.rotation.x > -mouseY / 10) {
-        clockRef.current.rotation.x -= delta;
-      }
-      if (clockRef.current.rotation.x < -mouseY / 10) {
-        clockRef.current.rotation.x += delta;
-      }
+      gsap.to(clockRef.current.rotation, {
+        x: -mouseY / 10,
+        y: mouseX / 10,
+        duration: 0.5,
+      });
+      // if (clockRef.current.rotation.y < mouseX / 10) {
+      //   clockRef.current.rotation.y += delta;
+      // }
+      // if (clockRef.current.rotation.y > mouseX / 10) {
+      //   clockRef.current.rotation.y -= delta;
+      // }
+      // if (clockRef.current.rotation.x > -mouseY / 10) {
+      //   clockRef.current.rotation.x -= delta;
+      // }
+      // if (clockRef.current.rotation.x < -mouseY / 10) {
+      //   clockRef.current.rotation.x += delta;
+      // }
     }
   });
   useGSAP(() => {
