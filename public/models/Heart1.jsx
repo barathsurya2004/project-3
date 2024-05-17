@@ -25,41 +25,41 @@ export function HeartModel(props) {
   useFrame((state, delta) => {
     if (!hover && !rev) {
       // console.log(heartref.current.rotation);
-      gsap.to(heartref.current.rotation, {
-        x: 0,
-        y: 0,
-        duration: 1,
-      });
-      // if (heartref.current.rotation.x > 0) {
-      //   heartref.current.rotation.x -= delta / 10;
-      // }
-      // if (heartref.current.rotation.x < 0) {
-      //   heartref.current.rotation.x += delta / 10;
-      // }
-      // if (heartref.current.rotation.y > 0) {
-      //   heartref.current.rotation.y -= delta / 10;
-      // }
-      // if (heartref.current.rotation.y < 0) {
-      //   heartref.current.rotation.y += delta / 10;
-      // }
+      // gsap.to(heartref.current.rotation, {
+      //   x: 0,
+      //   y: 0,
+      //   duration: 1,
+      // });
+      if (heartref.current.rotation.x > 0) {
+        heartref.current.rotation.x -= delta / 10;
+      }
+      if (heartref.current.rotation.x < 0) {
+        heartref.current.rotation.x += delta / 10;
+      }
+      if (heartref.current.rotation.y > 0) {
+        heartref.current.rotation.y -= delta / 10;
+      }
+      if (heartref.current.rotation.y < 0) {
+        heartref.current.rotation.y += delta / 10;
+      }
     } else if (hover && !rev) {
-      gsap.to(heartref.current.rotation, {
-        x: -mouseY / 10,
-        y: mouseX / 10,
-        duration: 0.5,
-      });
-      // if (heartref.current.rotation.y < mouseX / 10) {
-      //   heartref.current.rotation.y += delta / 5;
-      // }
-      // if (heartref.current.rotation.y > mouseX / 10) {
-      //   heartref.current.rotation.y -= delta / 5;
-      // }
-      // if (heartref.current.rotation.x > -mouseY / 10) {
-      //   heartref.current.rotation.x -= delta / 5;
-      // }
-      // if (heartref.current.rotation.x < -mouseY / 10) {
-      //   heartref.current.rotation.x += delta / 5;
-      // }
+      // gsap.to(heartref.current.rotation, {
+      //   x: -mouseY / 10,
+      //   y: mouseX / 10,
+      //   duration: 0.5,
+      // });
+      if (heartref.current.rotation.y < mouseX / 10) {
+        heartref.current.rotation.y += delta / 5;
+      }
+      if (heartref.current.rotation.y > mouseX / 10) {
+        heartref.current.rotation.y -= delta / 5;
+      }
+      if (heartref.current.rotation.x > -mouseY / 10) {
+        heartref.current.rotation.x -= delta / 5;
+      }
+      if (heartref.current.rotation.x < -mouseY / 10) {
+        heartref.current.rotation.x += delta / 5;
+      }
     }
   });
   useGSAP(() => {
