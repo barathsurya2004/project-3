@@ -17,6 +17,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { Earth } from "../public/models/ModelEarth";
 import { Perf } from "r3f-perf";
+import Comp from "./pages/Comp";
 gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   const [zIndexHeart, setZIndexHeart] = useState(3);
@@ -47,10 +48,19 @@ const App = () => {
         onLeaveBack: () => setZIndexGlobe(-1),
       },
     });
+    gsap.to(".globe-canvas", {
+      y: "-100vh",
+      scrollTrigger: {
+        trigger: ".world-out",
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      },
+    });
   });
   return (
     <>
-      <div className="webgl-canvas">
+      {/* <div className="webgl-canvas">
         <div
           className="heart-canvas canvas1"
           style={{
@@ -95,7 +105,7 @@ const App = () => {
           >
             <Perf />
             <ambientLight intensity={0.5} />
-            <directionalLight intensity={3} position={[0, 0, 10]} />
+            <directionalLight intensity={2} position={[0, 0, 5]} />
             <Earth scale={0} rotation-z={Math.PI * 0.5} />
           </Canvas>
         </div>
@@ -115,9 +125,8 @@ const App = () => {
       <div className="trigger world-move-zoom" />
       <div className="trigger world-zoom1" />
       <div className="trigger nav-to-tn" />
-      <div className="trigger all-out" />
-      <div className="trigger all-out" />
-      <div className="trigger" />
+      <div className="trigger world-out" /> */}
+      <Comp />
     </>
   );
 };

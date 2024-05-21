@@ -2,8 +2,10 @@ import { useGSAP } from "@gsap/react";
 import "./Hero.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import { useState } from "react";
 gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
+  const [heroActive, setHeroActive] = useState(true);
   useGSAP(() => {
     const beyond = gsap.timeline({
       scrollTrigger: {
@@ -67,58 +69,70 @@ const Hero = () => {
         opacity: 1,
       }
     );
+    gsap.to(".hero", {
+      y: "-100vh",
+      scrollTrigger: {
+        trigger: ".world-out",
+        start: "top top",
+        end: "bottom top",
+        toggleActions: "play none none reverse",
+      },
+    });
   });
 
   return (
-    <div className="hero">
-      <div className="staying title">
-        {"FOOD IS".split("").map((word) => {
-          return word === " " ? (
-            <span className="word start">&nbsp;</span>
-          ) : (
-            <span className="word start">{word}</span>
-          );
-        })}
-      </div>
-      <div className="move1 subtitle">
-        {"LOVE".split("").map((word) => {
-          return word === " " ? (
-            <span className="word start ">&nbsp;</span>
-          ) : (
-            <span className="word start">{word}</span>
-          );
-        })}
-      </div>
-      <div className="move2 subtitle">
-        <div>
-          {"BEYOND".split("").map((word) => {
+    <>
+      (
+      <div className="hero">
+        <div className="staying title">
+          {"FOOD IS".split("").map((word) => {
             return word === " " ? (
-              <span className="word move2">&nbsp;</span>
+              <span className="word start">&nbsp;</span>
             ) : (
-              <span className="word move2">{word}</span>
+              <span className="word start">{word}</span>
             );
           })}
         </div>
-        <div>
-          {"TIME".split("").map((word) => {
+        <div className="move1 subtitle">
+          {"LOVE".split("").map((word) => {
             return word === " " ? (
-              <span className="word move2">&nbsp;</span>
+              <span className="word start ">&nbsp;</span>
             ) : (
-              <span className="word move2">{word}</span>
+              <span className="word start">{word}</span>
+            );
+          })}
+        </div>
+        <div className="move2 subtitle">
+          <div>
+            {"BEYOND".split("").map((word) => {
+              return word === " " ? (
+                <span className="word move2">&nbsp;</span>
+              ) : (
+                <span className="word move2">{word}</span>
+              );
+            })}
+          </div>
+          <div>
+            {"TIME".split("").map((word) => {
+              return word === " " ? (
+                <span className="word move2">&nbsp;</span>
+              ) : (
+                <span className="word move2">{word}</span>
+              );
+            })}
+          </div>
+        </div>
+        <div className="move3 subtitle">
+          {"CULTURE".split("").map((word) => {
+            return word === " " ? (
+              <span className="word move3">&nbsp;</span>
+            ) : (
+              <span className="word move3">{word}</span>
             );
           })}
         </div>
       </div>
-      <div className="move3 subtitle">
-        {"CULTURE".split("").map((word) => {
-          return word === " " ? (
-            <span className="word move3">&nbsp;</span>
-          ) : (
-            <span className="word move3">{word}</span>
-          );
-        })}
-      </div>
-    </div>
+    </>
   );
 };
 

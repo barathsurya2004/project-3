@@ -37,7 +37,7 @@ export function Earth(props) {
   useFrame((state, delta) => {
     if (rotate) {
       earth.current.rotation.y =
-        ((earth.current.rotation.y + delta) % (2 * Math.PI)) + 10 * Math.PI;
+        (earth.current.rotation.y + delta) % (2 * Math.PI);
 
       // earthMouseX.current.rotation.y = x;
       // earthMouseX.current.rotation.x = x / 1000;
@@ -57,7 +57,7 @@ export function Earth(props) {
     }
   });
   useGSAP(() => {
-    earth.current.rotation.y = Math.PI * 10;
+    earth.current.rotation.y = 0;
     console.log(earth.current);
 
     gsap.to(
@@ -101,7 +101,7 @@ export function Earth(props) {
       earth.current.rotation,
 
       {
-        y: (-Math.PI * 66.8) / 180,
+        y: (-Math.PI * 66.8) / 180 + 10 * Math.PI,
         scrollTrigger: {
           trigger: ".nav-to-india",
           start: "top bottom",
