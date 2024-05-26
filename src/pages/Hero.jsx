@@ -1,139 +1,81 @@
-import { useGSAP } from "@gsap/react";
-import "./Hero.css";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import { useState } from "react";
-gsap.registerPlugin(ScrollTrigger);
-const Hero = () => {
-  const [heroActive, setHeroActive] = useState(true);
-  useGSAP(() => {
-    const beyond = gsap.timeline({
-      scrollTrigger: {
-        markers: true,
-        trigger: ".text-change1",
-        start: "top bottom",
+import {
+  MeshTransmissionMaterial,
+  OrbitControls,
+  shaderMaterial,
+} from "@react-three/drei";
+import { Canvas, extend, useFrame } from "@react-three/fiber";
+import glsl from "glslify";
+import { Suspense, useRef } from "react";
+import * as THREE from "three";
 
-        scrub: 0.8,
-      },
-    });
-    const culture = gsap.timeline({
-      scrollTrigger: {
-        markers: true,
-        trigger: ".text-change2",
-        start: "top bottom",
+const NewShaderMaterial = shaderMaterial(
+  {
+    uColor: new THREE.Color(0, 0.2, 0.4),
+    uTime: 0,
+  },
+  // Vertex Shader
+  glsl`
+  varying vec3 vPos;
+  varying vec2 vUv;
+  varying vec3 vNormal;
+  void main() {
+    vPos = position;
+    vUv = uv;
+    vNormal = normal;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+  `,
+  // Fragment Shader
+  glsl`
+varying vec3 vPos;
+varying vec2 vUv;
+varying vec3 vNormal;
+void main() {
+  // Calculate alpha based on the x position
+ // Adjust range as necessary
+  vec3 viewDir = normalize(cameraPosition - vPos);
+  float fres = dot(viewDir, vNormal);
 
-        scrub: 0.8,
-      },
-    });
-    const allOut = gsap.timeline({
-      scrollTrigger: {
-        markers: true,
-        trigger: ".world-zoom",
-        start: "top bottom",
-        scrub: 0.8,
-      },
-    });
-    gsap.from(".start", {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.05,
-    });
-    beyond.to(".move1", {
-      x: "-100px",
-      opacity: 0,
-    });
-    beyond.fromTo(
-      ".move2",
-      {
-        y: "100px",
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-      }
-    );
-    culture.to(".move2", {
-      x: "-100px",
-      opacity: 0,
-    });
-    culture.fromTo(
-      ".move3",
-      {
-        y: "100",
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-      }
-    );
-    gsap.to(".hero", {
-      y: "-100vh",
-      scrollTrigger: {
-        trigger: ".world-out",
-        start: "top top",
-        end: "bottom top",
-        toggleActions: "play none none reverse",
-      },
-    });
-  });
-
+  gl_FragColor = vec4(1.0,1.0,1.0,pow(fres,10.0));
+}
+`
+);
+extend({ NewShaderMaterial });
+export default function Hero() {
   return (
-    <>
-      (
-      <div className="hero">
-        <div className="staying title">
-          {"FOOD IS".split("").map((word) => {
-            return word === " " ? (
-              <span className="word start">&nbsp;</span>
-            ) : (
-              <span className="word start">{word}</span>
-            );
-          })}
-        </div>
-        <div className="move1 subtitle">
-          {"LOVE".split("").map((word) => {
-            return word === " " ? (
-              <span className="word start ">&nbsp;</span>
-            ) : (
-              <span className="word start">{word}</span>
-            );
-          })}
-        </div>
-        <div className="move2 subtitle">
-          <div>
-            {"BEYOND".split("").map((word) => {
-              return word === " " ? (
-                <span className="word move2">&nbsp;</span>
-              ) : (
-                <span className="word move2">{word}</span>
-              );
-            })}
-          </div>
-          <div>
-            {"TIME".split("").map((word) => {
-              return word === " " ? (
-                <span className="word move2">&nbsp;</span>
-              ) : (
-                <span className="word move2">{word}</span>
-              );
-            })}
-          </div>
-        </div>
-        <div className="move3 subtitle">
-          {"CULTURE".split("").map((word) => {
-            return word === " " ? (
-              <span className="word move3">&nbsp;</span>
-            ) : (
-              <span className="word move3">{word}</span>
-            );
-          })}
-        </div>
-      </div>
-    </>
+    <Canvas>
+      <OrbitControls />
+      <mesh position={[0, 0, -5]}>
+        <planeGeometry args={[100, 100]} />
+        <meshStandardMaterial color={"hotpink"} />
+      </mesh>
+      <directionalLight position={[5, 5, 5]} intensity={1} />
+      <mesh scale={1.001}>
+        <sphereGeometry args={[1, 32, 32]} />
+        <MeshTransmissionMaterial
+          thickness={0.4}
+          transparent
+          backside
+          color={"white"}
+          roughness={0.2}
+        />
+      </mesh>
+      <Suspense fallback={null}>
+        <Ball />
+      </Suspense>
+    </Canvas>
+  );
+}
+
+export const Ball = () => {
+  const ref = useRef();
+  useFrame(({ clock }) => {
+    ref.current.uTime = clock.getElapsedTime();
+  });
+  return (
+    <mesh position={[0, 0, 0]}>
+      <sphereGeometry args={[1, 32, 32]} />
+      <newShaderMaterial ref={ref} uColor={"hotpink"} transparent castShadows />
+    </mesh>
   );
 };
-
-export default Hero;

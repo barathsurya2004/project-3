@@ -24,112 +24,112 @@ export function Clock(props) {
   const [rev, setRev] = useState(false);
 
   const { nodes, materials, animations } = useGLTF("/models/Clock.glb");
-  useFrame((state, delta) => {
-    const d = new Date();
-    // console.log(d.getHours());
-    hourRef.current.rotation.y =
-      -Math.PI * 0.5 +
-      (2 * Math.PI * d.getHours()) / 12 +
-      (2 * Math.PI * d.getMinutes()) / (60 * 12);
-    minRef.current.rotation.y =
-      -Math.PI * 0.5 - (2 * Math.PI * d.getMinutes()) / 60;
-    secRef.current.rotation.y =
-      -Math.PI * 0.1 + (2 * Math.PI * d.getSeconds()) / 60;
-    // console.log(mouseX);
-    // console.log(mouseY);
-    if (!hover && !rev) {
-      // console.log(clockRef.current.rotation);
-      // gsap.to(clockRef.current.rotation, {
-      //   x: 0,
-      //   y: 0,
-      //   duration: 1,
-      // });
-      if (clockRef.current.rotation.x > 0) {
-        clockRef.current.rotation.x -= delta / 10;
-      }
-      if (clockRef.current.rotation.x < 0) {
-        clockRef.current.rotation.x += delta / 10;
-      }
-      if (clockRef.current.rotation.y > 0) {
-        clockRef.current.rotation.y -= delta / 10;
-      }
-      if (clockRef.current.rotation.y < 0) {
-        clockRef.current.rotation.y += delta / 10;
-      }
-    } else if (hover && !rev) {
-      // gsap.to(clockRef.current.rotation, {
-      //   x: -mouseY / 10,
-      //   y: mouseX / 10,
-      //   duration: 0.5,
-      // });
-      if (clockRef.current.rotation.y < mouseX / 10) {
-        clockRef.current.rotation.y += delta;
-      }
-      if (clockRef.current.rotation.y > mouseX / 10) {
-        clockRef.current.rotation.y -= delta;
-      }
-      if (clockRef.current.rotation.x > -mouseY / 10) {
-        clockRef.current.rotation.x -= delta;
-      }
-      if (clockRef.current.rotation.x < -mouseY / 10) {
-        clockRef.current.rotation.x += delta;
-      }
-    }
-  });
-  useGSAP(() => {
-    console.log(clockRef.current.rotation);
-    gsap.from(clockRef.current.rotation, {
-      delay: 2,
-      y: -10 * Math.PI - Math.PI * 0.5,
-      scrollTrigger: {
-        trigger: ".text-change1",
-        toggleActions: "play none none reverse",
-        onEnter: () => setRev(true),
-        onLeave: () => setRev(false),
-        start: "top 50%",
-        end: "top top",
-        scrub: 1.2,
-      },
-      ease: "expo.out",
-    });
-    gsap.fromTo(
-      clockRef.current.scale,
-      {
-        x: 0,
-        y: 0,
-      },
-      {
-        x: 2.6,
-        y: 2.6,
-        duration: 0.001,
-        scrollTrigger: {
-          trigger: ".text-change1",
-          start: "top 50%",
+  // useFrame((state, delta) => {
+  //   const d = new Date();
+  //   // console.log(d.getHours());
+  //   hourRef.current.rotation.y =
+  //     -Math.PI * 0.5 +
+  //     (2 * Math.PI * d.getHours()) / 12 +
+  //     (2 * Math.PI * d.getMinutes()) / (60 * 12);
+  //   minRef.current.rotation.y =
+  //     -Math.PI * 0.5 - (2 * Math.PI * d.getMinutes()) / 60;
+  //   secRef.current.rotation.y =
+  //     -Math.PI * 0.1 + (2 * Math.PI * d.getSeconds()) / 60;
+  //   // console.log(mouseX);
+  //   // console.log(mouseY);
+  //   if (!hover && !rev) {
+  //     // console.log(clockRef.current.rotation);
+  //     // gsap.to(clockRef.current.rotation, {
+  //     //   x: 0,
+  //     //   y: 0,
+  //     //   duration: 1,
+  //     // });
+  //     if (clockRef.current.rotation.x > 0) {
+  //       clockRef.current.rotation.x -= delta / 10;
+  //     }
+  //     if (clockRef.current.rotation.x < 0) {
+  //       clockRef.current.rotation.x += delta / 10;
+  //     }
+  //     if (clockRef.current.rotation.y > 0) {
+  //       clockRef.current.rotation.y -= delta / 10;
+  //     }
+  //     if (clockRef.current.rotation.y < 0) {
+  //       clockRef.current.rotation.y += delta / 10;
+  //     }
+  //   } else if (hover && !rev) {
+  //     // gsap.to(clockRef.current.rotation, {
+  //     //   x: -mouseY / 10,
+  //     //   y: mouseX / 10,
+  //     //   duration: 0.5,
+  //     // });
+  //     if (clockRef.current.rotation.y < mouseX / 10) {
+  //       clockRef.current.rotation.y += delta;
+  //     }
+  //     if (clockRef.current.rotation.y > mouseX / 10) {
+  //       clockRef.current.rotation.y -= delta;
+  //     }
+  //     if (clockRef.current.rotation.x > -mouseY / 10) {
+  //       clockRef.current.rotation.x -= delta;
+  //     }
+  //     if (clockRef.current.rotation.x < -mouseY / 10) {
+  //       clockRef.current.rotation.x += delta;
+  //     }
+  //   }
+  // });
+  // useGSAP(() => {
+  //   console.log(clockRef.current.rotation);
+  //   gsap.from(clockRef.current.rotation, {
+  //     delay: 2,
+  //     y: -10 * Math.PI - Math.PI * 0.5,
+  //     scrollTrigger: {
+  //       trigger: ".text-change1",
+  //       toggleActions: "play none none reverse",
+  //       onEnter: () => setRev(true),
+  //       onLeave: () => setRev(false),
+  //       start: "top 50%",
+  //       end: "top top",
+  //       scrub: 1.2,
+  //     },
+  //     ease: "expo.out",
+  //   });
+  //   gsap.fromTo(
+  //     clockRef.current.scale,
+  //     {
+  //       x: 0,
+  //       y: 0,
+  //     },
+  //     {
+  //       x: 2.6,
+  //       y: 2.6,
+  //       duration: 0.001,
+  //       scrollTrigger: {
+  //         trigger: ".text-change1",
+  //         start: "top 50%",
 
-          toggleActions: "play none none reverse",
-          immediateRender: false,
-        },
-      }
-    );
-    gsap.fromTo(
-      clockRef.current.scale,
-      {
-        x: 2.6,
-        y: 2.6,
-      },
-      {
-        y: 0,
-        x: 0,
-        duration: 0.001,
-        scrollTrigger: {
-          trigger: ".text-change2",
-          start: "top 50%",
-          toggleActions: "play none none reverse",
-        },
-        immediateRender: false,
-      }
-    );
-  });
+  //         toggleActions: "play none none reverse",
+  //         immediateRender: false,
+  //       },
+  //     }
+  //   );
+  //   gsap.fromTo(
+  //     clockRef.current.scale,
+  //     {
+  //       x: 2.6,
+  //       y: 2.6,
+  //     },
+  //     {
+  //       y: 0,
+  //       x: 0,
+  //       duration: 0.001,
+  //       scrollTrigger: {
+  //         trigger: ".text-change2",
+  //         start: "top 50%",
+  //         toggleActions: "play none none reverse",
+  //       },
+  //       immediateRender: false,
+  //     }
+  //   );
+  // });
   const wood = useLoader(TextureLoader, "/models/wood.jpg");
   return (
     <group
