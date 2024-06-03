@@ -10,8 +10,8 @@ export function AnimTest(props) {
   const group = useRef();
   const { nodes, materials, animations } = useGLTF("/models/animTest.glb");
   const { actions, names } = useAnimations(animations, group);
-  const action = actions[names[1]];
   const onHoverHad = () => {
+    const action = actions[names[1]];
     action.setLoop(THREE.LoopOnce); // Set the animation to play only once
     action.reset(); // Reset the action to its initial state
     action.clampWhenFinished = true; // Prevent the animation from resetting to the initial state
@@ -20,6 +20,7 @@ export function AnimTest(props) {
   };
 
   const onHoverLeave = () => {
+    const action = actions[names[1]];
     action.reset(); // Reset the action to its initial state
     action.setLoop(THREE.LoopOnce); // Set the animation to play only once
     action.time = action.getClip().duration; // Set the animation time to the end
