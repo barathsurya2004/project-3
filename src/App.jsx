@@ -31,7 +31,7 @@ const App = () => {
         <Canvas>
           <ambientLight intensity={1} />
           <directionalLight intensity={3} position={[10, 10, 10]} />
-          <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={100} />
+          <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={50} />
           {/* <PerspectiveCamera makeDefault position={[0, 0, 10]} zoom={0.4} /> */}
           <FaceModel />
         </Canvas>

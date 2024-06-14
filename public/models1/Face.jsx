@@ -14,7 +14,7 @@ export function FaceModel(props) {
   const { actions, names } = useAnimations(animations, group);
   const hoverMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 }); // Red when hovered
   const defaultMaterial = new THREE.MeshStandardMaterial({ color: "black" }); // Green by default
-
+  const eyesRef = useRef();
   // Create a reference to the mesh
   const meshRef1 = useRef();
   const meshRef = useRef();
@@ -39,6 +39,11 @@ export function FaceModel(props) {
     group.current.rotation.y = state.pointer.x / 5;
     group.current.rotation.x = -state.pointer.y / 5;
     // console.log(state);
+    meshRef.current.position.x = 2.104 + state.pointer.x / 1.5;
+    meshRef1.current.position.x = -2.724 + state.pointer.x / 1.5;
+    meshRef.current.position.y = 9.577 + state.pointer.y / 1.5;
+    meshRef1.current.position.y = 9.577 + state.pointer.y / 1.5;
+    // console.log(state.pointer.x / 2);
   });
 
   const handleOnHoverIn = () => {
