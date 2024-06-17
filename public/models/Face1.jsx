@@ -25,14 +25,10 @@ export function Face(props) {
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       const { alpha, beta, gamma } = e;
-      if (alpha < 90 && alpha > -90) {
-        setAlpha(alpha - 180);
-      }
-      setBeta(beta - 90);
-      if (gamma < 90 && gamma > -90) {
-        setGamma(gamma);
-      }
-      console.log(alpha);
+      gsap.to(group.current.rotation, {
+        x: THREE.MathUtils.degToRad(beta - 90),
+        y: THREE.MathUtils.degToRad(gamma / 2),
+      });
     });
   }, []);
   useEffect(() => {
@@ -60,13 +56,7 @@ export function Face(props) {
   }, [blink]);
 
   return (
-    <group
-      ref={group}
-      {...props}
-      dispose={null}
-      rotation={[(Math.PI * beta) / 180, (Math.PI * gamma) / 180, 0]}
-      position={[0, -10, 0]}
-    >
+    <group ref={group} {...props} dispose={null} position={[0, -10, 0]}>
       <mesh scale={9} position={[0, 10, 5]}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial color="white" transparent opacity={0} />
