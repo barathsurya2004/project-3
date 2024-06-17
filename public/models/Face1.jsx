@@ -23,19 +23,35 @@ export function Face(props) {
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
   useEffect(() => {
-    window.addEventListener("deviceorientation", (e) => {
-      const { alpha, beta, gamma } = e;
+    const handleOrientation = (e) => {
+      let { alpha, beta, gamma } = e;
+
+      // Adjust and clamp the angles
+      const xRotation = THREE.MathUtils.degToRad(beta - 90);
+      const yRotation = THREE.MathUtils.degToRad(gamma / 2);
+      const zRotation = THREE.MathUtils.degToRad(gamma);
+
+      // Clamp the rotations to within -180 to 180 degrees
+      const clampedX = THREE.MathUtils.clamp(xRotation, -Math.PI, Math.PI);
+      const clampedY = THREE.MathUtils.clamp(yRotation, -Math.PI, Math.PI);
+      const clampedZ = THREE.MathUtils.clamp(zRotation, -Math.PI, Math.PI);
+
+      // Use GSAP to animate the rotations smoothly
       gsap.to(group.current.rotation, {
-        x: THREE.MathUtils.degToRad(beta - 90),
-        y:
-          beta > 90
-            ? THREE.MathUtils.degToRad(-gamma / 2)
-            : THREE.MathUtils.degToRad(gamma / 2),
+        x: clampedX,
+        y: clampedY,
         ease: "power1.out", // Easing function for smooth animation
         duration: 1, // Duration of the animation in seconds
       });
-    });
+    };
+
+    window.addEventListener("deviceorientation", handleOrientation);
+
+    return () => {
+      window.removeEventListener("deviceorientation", handleOrientation);
+    };
   }, []);
+
   useEffect(() => {
     const blinkTimeline = gsap.timeline({
       repeat: -1,
