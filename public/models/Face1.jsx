@@ -173,7 +173,7 @@ export function Face(props) {
       ref={group}
       {...props}
       dispose={null}
-      rotation={[orientation.beta, orientation.gamma, orientation.alpha]}
+      rotation={[orientation.alpha / 1000, orientation.gamma, 0]}
       position={[0, -10, 0]}
       // onPointerEnter={handleOnHoverIn}
       // onPointerOut={handleOnHoverOut}
