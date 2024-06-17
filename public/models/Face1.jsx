@@ -23,18 +23,16 @@ export function Face(props) {
   const eyebrowRefl = useRef();
   const eyebrowRefr = useRef();
   const { hovered, setHovered } = useState(false);
-  const [orientation, setOrientation] = useState({
-    alpha: 0,
-    beta: 0,
-    gamma: 0,
-  });
+  const [alpha, setAlpha] = useState(0);
+  const [beta, setBeta] = useState(0);
+  const [gamma, setGamma] = useState(0);
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
-      setOrientation({
-        alpha: e.alpha,
-        beta: e.beta,
-        gamma: e.gamma,
-      });
+      const { alpha, beta, gamma } = e;
+      setAlpha(alpha);
+      setBeta(beta);
+      setGamma(gamma);
+      console.log(alpha);
     });
   }, []);
   useEffect(() => {
@@ -61,119 +59,12 @@ export function Face(props) {
     };
   }, [blink]);
 
-  useFrame((state) => {
-    if (group.current) {
-      group.current.rotation.y = state.pointer.x / 5;
-      group.current.rotation.x = -state.pointer.y / 5;
-    }
-    if (meshRef.current) {
-      meshRef.current.position.x = 2.104 + state.pointer.x / 1.8;
-      meshRef.current.position.y = 9.4 + state.pointer.y / 1.8;
-    }
-    if (meshRef1.current) {
-      meshRef1.current.position.x = -2.724 + state.pointer.x / 1.8;
-      meshRef1.current.position.y = 9.4 + state.pointer.y / 1.8;
-    }
-  });
-  const animationPlayedRef = useRef(false);
-  useEffect(() => {
-    if (hovered && !animationPlayedRef.current) {
-      gsap.fromTo(
-        meshRef.current.material.color,
-        { r: 0, g: 0, b: 0 },
-        { r: 1, g: 0, b: 0, duration: 0.2, immediateRender: false }
-      );
-      animationPlayedRef.current = true;
-      names.forEach((name) => {
-        const action = actions[name];
-        action.setLoop(THREE.LoopOnce);
-        action.reset();
-        action.clampWhenFinished = true;
-        action.timeScale = 1.5;
-        action.play();
-      });
-    } else if (!hovered && animationPlayedRef.current) {
-      gsap.fromTo(
-        meshRef.current.material.color,
-        { r: 1, g: 0, b: 0 },
-        { r: 0, g: 0, b: 0, duration: 0.2, immediateRender: false }
-      );
-      animationPlayedRef.current = false;
-      names.forEach((name) => {
-        const action = actions[name];
-        action.paused = true;
-        action.time = action.getClip().duration;
-        action.paused = false;
-        action.timeScale = -1.5;
-        action.clampWhenFinished = true;
-        action.play();
-      });
-    }
-  }, [hovered, actions, names]);
-
-  // const handleOnHoverIn = () => {
-  //   // console.log(meshRef.current.material.color);
-  //   gsap.fromTo(
-  //     meshRef.current.material.color,
-  //     {
-  //       r: 0,
-  //       g: 0,
-  //       b: 0,
-  //     },
-  //     {
-  //       r: 1,
-  //       g: 0,
-  //       b: 0,
-  //       duration: 0.2,
-  //       immediateRender: false,
-  //     }
-  //   );
-  //   setBlink(false);
-  //   names.forEach((name) => {
-  //     const action = actions[name];
-  //     action.setLoop(THREE.LoopOnce);
-  //     action.reset();
-  //     action.clampWhenFinished = true;
-  //     action.timeScale = 1.5;
-  //     action.play();
-  //   });
-  // };
-
-  // const handleOnHoverOut = () => {
-  //   setBlink(true);
-  //   // console.log(meshRef.current.material);
-  //   gsap.fromTo(
-  //     meshRef.current.material.color,
-  //     {
-  //       r: 1,
-  //       g: 0,
-  //       b: 0,
-  //     },
-  //     {
-  //       r: 0,
-  //       g: 0,
-  //       b: 0,
-  //       duration: 0.2,
-  //       immediateRender: false,
-  //     }
-  //   );
-  //   names.forEach((name) => {
-  //     const action = actions[name];
-  //     action.paused = true;
-  //     action.time = action.getClip().duration;
-  //     action.paused = false;
-  //     action.timeScale = -1.5;
-  //     action.clampWhenFinished = true;
-  //     action.play();
-  //   });
-  // };
-
   return (
     <group
       ref={group}
       {...props}
       dispose={null}
-      rotation={[orientation.alpha / 100, orientation.gamma, 0]}
+      rotation={[(Math.PI * beta) / 180, (Math.PI * gamma) / 180, 0]}
       position={[0, -10, 0]}
       // onPointerEnter={handleOnHoverIn}
       // onPointerOut={handleOnHoverOut}
