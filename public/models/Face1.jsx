@@ -26,7 +26,7 @@ export function Face(props) {
     window.addEventListener("deviceorientation", (e) => {
       const { alpha, beta, gamma } = e;
       gsap.to(group.current.rotation, {
-        x: THREE.MathUtils.degToRad(beta - 90),
+        x: THREE.MathUtils.degToRad(beta - 70),
         y: THREE.MathUtils.degToRad(gamma / 2),
         ease: "power1.out", // Easing function for smooth animation
         duration: 1, // Duration of the animation in seconds

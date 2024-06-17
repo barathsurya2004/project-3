@@ -20,7 +20,7 @@ const App = () => {
           <Canvas>
             <ambientLight />
             <directionalLight intensity={3} position={[10, 10, 10]} />
-            <OrthographicCamera makeDefault position={[0, 0, 20]} zoom={10} />
+            <OrthographicCamera makeDefault position={[0, 0, 20]} zoom={20} />
             <Face />
           </Canvas>
         </div>
