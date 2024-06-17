@@ -64,7 +64,7 @@ export function Face(props) {
       ref={group}
       {...props}
       dispose={null}
-      rotation={[(Math.PI * beta) / 180, (Math.PI * gamma) / 180, 0]}
+      rotation={[(Math.PI * (beta - 90)) / 180, (Math.PI * gamma) / 180, 0]}
       position={[0, -10, 0]}
       // onPointerEnter={handleOnHoverIn}
       // onPointerOut={handleOnHoverOut}
