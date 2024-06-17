@@ -23,6 +23,20 @@ export function Face(props) {
   const eyebrowRefl = useRef();
   const eyebrowRefr = useRef();
   const { hovered, setHovered } = useState(false);
+  const [orientation, setOrientation] = useState({
+    alpha: 0,
+    beta: 0,
+    gamma: 0,
+  });
+  useEffect(() => {
+    window.addEventListener("deviceorientation", (e) => {
+      setOrientation({
+        alpha: e.alpha,
+        beta: e.beta,
+        gamma: e.gamma,
+      });
+    });
+  }, []);
   useEffect(() => {
     const blinkTimeline = gsap.timeline({
       repeat: -1,
@@ -159,6 +173,7 @@ export function Face(props) {
       ref={group}
       {...props}
       dispose={null}
+      rotation={[orientation.beta, orientation.gamma, orientation.alpha]}
       position={[0, -10, 0]}
       // onPointerEnter={handleOnHoverIn}
       // onPointerOut={handleOnHoverOut}

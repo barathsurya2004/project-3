@@ -4,11 +4,6 @@ import { Face } from "../public/models/Face1";
 import { CameraControls, OrthographicCamera } from "@react-three/drei";
 
 const App = () => {
-  useEffect(() => {
-    window.addEventListener("devicemotion", (e) => {
-      console.log(e);
-    });
-  });
   return (
     <>
       <div>
