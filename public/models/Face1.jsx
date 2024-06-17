@@ -29,7 +29,9 @@ export function Face(props) {
         setAlpha(alpha - 180);
       }
       setBeta(beta - 90);
-      setGamma(gamma - 180);
+      if (gamma < 90 && gamma > -90) {
+        setGamma(gamma);
+      }
       console.log(alpha);
     });
   }, []);
