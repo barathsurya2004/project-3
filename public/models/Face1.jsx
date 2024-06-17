@@ -64,11 +64,7 @@ export function Face(props) {
       ref={group}
       {...props}
       dispose={null}
-      rotation={[
-        (Math.PI * beta) / (5 * 180),
-        (Math.PI * gamma) / (5 * 180),
-        0,
-      ]}
+      rotation={[(Math.PI * beta) / 180, (Math.PI * gamma) / 180, 0]}
       position={[0, -10, 0]}
     >
       <mesh scale={9} position={[0, 10, 5]}>
