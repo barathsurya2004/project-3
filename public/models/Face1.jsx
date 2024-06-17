@@ -28,6 +28,8 @@ export function Face(props) {
       gsap.to(group.current.rotation, {
         x: THREE.MathUtils.degToRad(beta - 90),
         y: THREE.MathUtils.degToRad(gamma / 2),
+        ease: "power1.out", // Easing function for smooth animation
+        duration: 1, // Duration of the animation in seconds
       });
     });
   }, []);
