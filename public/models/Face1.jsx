@@ -15,23 +15,21 @@ export function Face(props) {
   const { actions, names } = useAnimations(animations, group);
   const [blink, setBlink] = useState(true);
 
-  const hoverMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-  const defaultMaterial = new THREE.MeshStandardMaterial({ color: "black" });
-
   const meshRef1 = useRef();
   const meshRef = useRef();
   const eyebrowRefl = useRef();
   const eyebrowRefr = useRef();
-  const { hovered, setHovered } = useState(false);
   const [alpha, setAlpha] = useState(0);
   const [beta, setBeta] = useState(0);
   const [gamma, setGamma] = useState(0);
   useEffect(() => {
     window.addEventListener("deviceorientation", (e) => {
       const { alpha, beta, gamma } = e;
-      setAlpha(alpha);
-      setBeta(beta);
-      setGamma(gamma);
+      if (alpha < 90 && alpha > -90) {
+        setAlpha(alpha - 180);
+      }
+      setBeta(beta - 90);
+      setGamma(gamma - 180);
       console.log(alpha);
     });
   }, []);
@@ -64,10 +62,12 @@ export function Face(props) {
       ref={group}
       {...props}
       dispose={null}
-      rotation={[(Math.PI * (beta - 90)) / 180, (Math.PI * gamma) / 180, 0]}
+      rotation={[
+        (Math.PI * beta) / (5 * 180),
+        (Math.PI * gamma) / (5 * 180),
+        0,
+      ]}
       position={[0, -10, 0]}
-      // onPointerEnter={handleOnHoverIn}
-      // onPointerOut={handleOnHoverOut}
     >
       <mesh scale={9} position={[0, 10, 5]}>
         <sphereGeometry args={[1, 32, 32]} />
