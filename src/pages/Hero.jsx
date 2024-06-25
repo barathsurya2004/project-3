@@ -44,22 +44,6 @@ extend({ NewShaderMaterial });
 export default function Hero() {
   return (
     <Canvas>
-      <OrbitControls />
-      <mesh position={[0, 0, -5]}>
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color={"hotpink"} />
-      </mesh>
-      <directionalLight position={[5, 5, 5]} intensity={1} />
-      <mesh scale={1.001}>
-        <sphereGeometry args={[1, 32, 32]} />
-        <MeshTransmissionMaterial
-          thickness={0.4}
-          transparent
-          backside
-          color={"white"}
-          roughness={0.2}
-        />
-      </mesh>
       <Suspense fallback={null}>
         <Ball />
       </Suspense>
@@ -68,14 +52,10 @@ export default function Hero() {
 }
 
 export const Ball = () => {
-  const ref = useRef();
-  useFrame(({ clock }) => {
-    ref.current.uTime = clock.getElapsedTime();
-  });
   return (
     <mesh position={[0, 0, 0]}>
       <sphereGeometry args={[1, 32, 32]} />
-      <newShaderMaterial ref={ref} uColor={"hotpink"} transparent castShadows />
+      <newShaderMaterial uColor={"hotpink"} transparent castShadows />
     </mesh>
   );
 };
