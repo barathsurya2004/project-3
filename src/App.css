@@ -33,3 +33,29 @@
    left: 55%;
 }
 
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  background-color: orange;
+  border-radius: 50%;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  transform: translate(-50%, -50%);
+}
+
+.line {
+  height: 5px;
+  background-color: orange;
+  position: absolute;
+  left: 100px;
+  top: 100px;
+  transform-origin: left center;
+}
